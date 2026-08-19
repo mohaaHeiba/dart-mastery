@@ -1,3 +1,92 @@
+// ============================================
+// CLASS DEFINITIONS
+// ============================================
+
+class Person {
+  String name;
+  int age;
+
+  // basic constructor
+  Person(this.name, this.age);
+
+  // named constructor: creates an object with default values
+  Person.guest()
+      : name = 'Guest',
+        age = 0;
+
+  // named constructor: builds an object from external data (e.g. an API response)
+  Person.fromMap(Map<String, dynamic> map)
+      : name = map['name'],
+        age = map['age'];
+
+  void introduce() {
+    print('Hi, I am $name, $age years old');
+  }
+
+  bool isAdult() {
+    return age >= 18;
+  }
+
+  @override
+  String toString() {
+    return 'Person(name: $name, age: $age)';
+  }
+}
+
+// named + optional parameters, with a default value for age
+class UserProfile {
+  String name;
+  int age;
+
+  UserProfile({required this.name, this.age = 0});
+}
+
+class Circle {
+  double radius;
+
+  Circle(this.radius);
+
+  // getter — computed on the fly, used without ()
+  double get area => 3.14 * radius * radius;
+
+  // setter — used like a property assignment
+  set diameter(double d) {
+    radius = d / 2;
+  }
+}
+
+class Counter {
+  static int count = 0;
+
+  Counter() {
+    count++; // every new Counter object increments the shared static value
+  }
+}
+
+// class with == and hashCode overridden to compare by VALUE
+class ComparablePerson {
+  String name;
+  int age;
+
+  ComparablePerson(this.name, this.age);
+
+  @override
+  bool operator ==(Object other) {
+    return other is ComparablePerson && other.name == name && other.age == age;
+  }
+
+  @override
+  int get hashCode => Object.hash(name, age);
+}
+
+// const constructor — all fields must be final for a class to support const
+class ConstPoint {
+  final int x;
+  final int y;
+
+  const ConstPoint(this.x, this.y);
+}
+
 void main() {
   // ============================================
   // BASIC CLASS + CONSTRUCTOR
@@ -124,91 +213,3 @@ void main() {
   print(identical(d1, d2)); // true! — const objects with the same values are canonicalized
 }
 
-// ============================================
-// CLASS DEFINITIONS
-// ============================================
-
-class Person {
-  String name;
-  int age;
-
-  // basic constructor
-  Person(this.name, this.age);
-
-  // named constructor: creates an object with default values
-  Person.guest()
-      : name = 'Guest',
-        age = 0;
-
-  // named constructor: builds an object from external data (e.g. an API response)
-  Person.fromMap(Map<String, dynamic> map)
-      : name = map['name'],
-        age = map['age'];
-
-  void introduce() {
-    print('Hi, I am $name, $age years old');
-  }
-
-  bool isAdult() {
-    return age >= 18;
-  }
-
-  @override
-  String toString() {
-    return 'Person(name: $name, age: $age)';
-  }
-}
-
-// named + optional parameters, with a default value for age
-class UserProfile {
-  String name;
-  int age;
-
-  UserProfile({required this.name, this.age = 0});
-}
-
-class Circle {
-  double radius;
-
-  Circle(this.radius);
-
-  // getter — computed on the fly, used without ()
-  double get area => 3.14 * radius * radius;
-
-  // setter — used like a property assignment
-  set diameter(double d) {
-    radius = d / 2;
-  }
-}
-
-class Counter {
-  static int count = 0;
-
-  Counter() {
-    count++; // every new Counter object increments the shared static value
-  }
-}
-
-// class with == and hashCode overridden to compare by VALUE
-class ComparablePerson {
-  String name;
-  int age;
-
-  ComparablePerson(this.name, this.age);
-
-  @override
-  bool operator ==(Object other) {
-    return other is ComparablePerson && other.name == name && other.age == age;
-  }
-
-  @override
-  int get hashCode => Object.hash(name, age);
-}
-
-// const constructor — all fields must be final for a class to support const
-class ConstPoint {
-  final int x;
-  final int y;
-
-  const ConstPoint(this.x, this.y);
-}
